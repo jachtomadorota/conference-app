@@ -1,4 +1,7 @@
-import com.dorotajachtoma.conferenceapp.model.Session;
+package com.dorotajachtoma.conferenceapp.model;
+
+
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,6 +31,11 @@ public class Speaker {
 
     @ManyToMany(mappedBy="speakers")
     private List<Session> sessions;
+
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name = "speaker_photo")
+    private byte [] photo;
 
 
     public Speaker() {
@@ -79,5 +87,13 @@ public class Speaker {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 }
