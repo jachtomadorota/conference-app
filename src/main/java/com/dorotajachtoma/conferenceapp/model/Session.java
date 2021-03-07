@@ -21,7 +21,7 @@ public class Session {
     @Column(name = "session_length")
     private Integer length;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
         name="session_speakers",
         joinColumns = @JoinColumn(name = "session_id"),

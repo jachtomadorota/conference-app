@@ -3,6 +3,8 @@ package com.dorotajachtoma.conferenceapp.controller;
 
 import com.dorotajachtoma.conferenceapp.model.Session;
 import com.dorotajachtoma.conferenceapp.repository.SessionRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,21 @@ public class SessionController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public Session createSession(@RequestBody final Session session){
-        return sessionRepository.saveAndFlush(session);
+        return sessionRepository.save(session);
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id){
+        sessionRepository.deleteById(id);
+    }
+
+    @RequestMapping(value = "{id}",method = RequestMethod.PUT)
+    public Session update(@PathVariable Long id, @RequestBody Session session){
+        Session existingSession = sessionRepository.getOne(id);
+        BeanUtils.copyProperties(session,existingSession,"session_id");
+        return sessionRepository.save(existingSession);
     }
 }
