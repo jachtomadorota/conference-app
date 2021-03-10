@@ -24,7 +24,7 @@ public class SpeakerController {
         return speakerRepository.findAll();
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public Speaker getOneSpeaker(@PathVariable Long id){
         return speakerRepository.getOne(id);
     }
@@ -35,13 +35,13 @@ public class SpeakerController {
         return speakerRepository.save(speaker);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id){
         speakerRepository.deleteById(id);
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
     public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker){
         Speaker existingSpeaker = speakerRepository.getOne(id);
         BeanUtils.copyProperties(speaker,existingSpeaker,"speaker_id");
